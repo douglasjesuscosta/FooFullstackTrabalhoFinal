@@ -7,6 +7,4 @@ public class ProdutoUnidade extends Produto{
 	public double calcularPreco() {
 		return this.getPreco() * quantidade;
 	}
-	
-	
 }
