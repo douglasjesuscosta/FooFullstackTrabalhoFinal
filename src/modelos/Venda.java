@@ -3,18 +3,21 @@ package modelos;
 import java.util.ArrayList;
 import java.util.Date;
 
+
 public class Venda {
 	private Double total;
+	private Pagamento pagamento;
 	private ArrayList<Produto> itens;
 	private Funcionario respVenda;
 	private Date dataVenda;
 	private String relatorioVenda;
+	private Caixa caixaVenda;
+
 	
 	public Venda() {
 		this.setItens(new ArrayList<Produto>());
 	}
-	
-	
+
 	public Date getDataVenda() {
 		return dataVenda;
 	}
@@ -49,7 +52,20 @@ public class Venda {
 	public void setRespVenda(Funcionario respVenda) {
 		this.respVenda = respVenda;
 	}
-	
-	
 
+	public Caixa getCaixaVenda() {
+		return caixaVenda;
+	}
+
+	public void setCaixaVenda(Caixa caixaVenda) {
+		this.caixaVenda = caixaVenda;
+	}
+
+	public Pagamento getPagamento() {
+		return pagamento;
+	}
+
+	public void setPagamento(Pagamento pagamento) {
+		this.pagamento = pagamento;
+	}
 }

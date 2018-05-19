@@ -3,17 +3,16 @@ package servicos;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import modelos.Funcionario;
+import modelos.Pagamento;
 import modelos.Produto;
 import modelos.Venda;
 
-public class Caixa {
+public class CaixaRegistradora {
 	
 	private Venda venda;
 
-	public Caixa(Funcionario funcionario) {
-		this.setVenda(new Venda());
-		this.getVenda().setRespVenda(funcionario);
+	public CaixaRegistradora() {
+		
 	}
 
 	public Venda getVenda() {
@@ -24,27 +23,38 @@ public class Caixa {
 		this.venda = venda;
 	}
 	
+	public void iniciarVenda(Venda venda) {
+		this.setVenda(venda);
+	}
 	
 	public void adicionarProduto(Produto produto) {
 		this.getVenda().getItens().add(produto);		
 	}
 	
 	public Venda finalizarCompra() {
-		this.somarTotalCompra();
-		this.gerarRelatorioCompra();
-		return this.getVenda();
+		venda.setTotal(this.somarTotalCompra());
+		venda.setRelatorioVenda(this.gerarRelatorioCompra());
+		
+		Venda venda = this.getVenda();
+		this.setVenda(new Venda());
+		
+		return venda;
 	}
 	
-	public void somarTotalCompra() {
+	public Double somarTotalCompra() {
 		Double resultado = 0.0;
 		ArrayList<Produto> itens = this.getVenda().getItens();
 		for(int i =0; i < itens.size(); i++) {
 			resultado += itens.get(i).getPreco();
 		}
-		this.getVenda().setTotal(resultado);
+		return resultado;
 	}
 	
-	public void gerarRelatorioCompra() {
+	public void receberPagamento(Pagamento pagamento) {
+		this.getVenda().setPagamento(pagamento);
+	}
+	
+	public String gerarRelatorioCompra() {
 		ArrayList<Produto> itens = this.getVenda().getItens();
 		String relatorioVenda = "";
 		relatorioVenda += "\t\t\t===== RELATORIO DE VENDAS =====\t\t\t\n";
@@ -63,7 +73,7 @@ public class Caixa {
 		}
 		
 		relatorioVenda += "Total: " + venda.getTotal() + "\n";
-		this.getVenda().setRelatorioVenda(relatorioVenda);
+		return relatorioVenda;
 	}
 	
 	
