@@ -6,7 +6,7 @@ import servicos.CaixaRegistradora;
 
 public class Caixa {
 	private int cod;
-	private Funcionario funcionario;
+	private Pessoa pessoa;
 	private ArrayList<Venda> vendas;
 	private Venda vendaAtual;
 	private CaixaRegistradora caixaReg;
@@ -17,11 +17,11 @@ public class Caixa {
 	public void setCod(int cod) {
 		this.cod = cod;
 	}
-	public Funcionario getFuncionario() {
-		return funcionario;
+	public Pessoa getFuncionario() {
+		return this.pessoa;
 	}
-	public void setFuncionario(Funcionario funcionario) {
-		this.funcionario = funcionario;
+	public void setFuncionario(Pessoa pessoa) {
+		this.pessoa = pessoa;
 	}
 	public ArrayList<Venda> getVendas() {
 		return vendas;
@@ -45,7 +45,7 @@ public class Caixa {
 	
 	public void iniciarCompra() {
 		Venda venda = new Venda();
-		venda.setRespVenda(funcionario);
+		venda.setRespVenda(this.getFuncionario());
 		venda.setCaixaVenda(this);
 		this.setVendaAtual(venda);
 		

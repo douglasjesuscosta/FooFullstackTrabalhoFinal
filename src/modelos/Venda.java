@@ -8,7 +8,7 @@ public class Venda {
 	private Double total;
 	private Pagamento pagamento;
 	private ArrayList<Produto> itens;
-	private Funcionario respVenda;
+	private Pessoa respVenda;
 	private Date dataVenda;
 	private String relatorioVenda;
 	private Caixa caixaVenda;
@@ -46,10 +46,10 @@ public class Venda {
 	public void setItens(ArrayList<Produto> itens) {
 		this.itens = itens;
 	}
-	public Funcionario getRespVenda() {
+	public Pessoa getRespVenda() {
 		return respVenda;
 	}
-	public void setRespVenda(Funcionario respVenda) {
+	public void setRespVenda(Pessoa respVenda) {
 		this.respVenda = respVenda;
 	}
 
