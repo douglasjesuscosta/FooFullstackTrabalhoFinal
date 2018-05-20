@@ -5,6 +5,7 @@ public abstract class Pessoa {
 	private int cpf;
 	private String nome;
 	private double salario;
+	private String senha;
 
 	public int getCpf() {
 		return cpf;
@@ -29,5 +30,7 @@ public abstract class Pessoa {
 	public void setSalario(double salario) {
 		this.salario = salario;
 	}
+	
+	
 
 }
