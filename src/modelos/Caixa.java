@@ -8,6 +8,7 @@ public class Caixa {
 	private int cod;
 	private Funcionario funcionario;
 	private ArrayList<Venda> vendas;
+	private Venda vendaAtual;
 	private CaixaRegistradora caixaReg;
 	
 	public int getCod() {
@@ -35,28 +36,39 @@ public class Caixa {
 		this.caixaReg = caixaReg;
 	}
 	
+	public Venda getVendaAtual() {
+		return vendaAtual;
+	}
+	public void setVendaAtual(Venda vendaAtual) {
+		this.vendaAtual = vendaAtual;
+	}
+	
 	public void iniciarCompra() {
 		Venda venda = new Venda();
 		venda.setRespVenda(funcionario);
 		venda.setCaixaVenda(this);
+		this.setVendaAtual(venda);
 		
 		CaixaRegistradora caixaReg = new CaixaRegistradora();
-		this.caixaReg.iniciarVenda(venda);
+		this.setCaixaReg(caixaReg);
 	}
 	
 	public void adicionarProduto(Produto produto) {
-		this.caixaReg.adicionarProduto(produto);
+		this.getVendaAtual().getItens().add(produto);
 	}
 	
 	public void receberPagamento(Pagamento pagamento) {
-		this.getCaixaReg().receberPagamento(pagamento);
+		this.getCaixaReg().receberPagamento(pagamento, this.getVendaAtual());
 	}
 	
 	public Venda finalizarVenda() {
-		Venda venda = this.getCaixaReg().finalizarCompra();
-		this.getVendas().add(this.getCaixaReg().finalizarCompra());
+		Double total = this.getCaixaReg().somarTotalCompra(this.getVendaAtual());
+		String relatorioVenda = this.getCaixaReg().gerarRelatorioCompra(this.getVendaAtual());
+		this.getVendaAtual().setTotal(total);
+		this.getVendaAtual().setRelatorioVenda(relatorioVenda);
+		this.getVendas().add(this.getVendaAtual());
 		
-		return venda;
+		return this.getVendaAtual();
 	}
 
 }

@@ -4,6 +4,7 @@ import java.util.Date;
 
 public abstract class Produto {
 	private int codigo;
+	private String codigoBarra;
 	private String nome;
 	private String marca;
 	private Date prazoValidade;
@@ -47,6 +48,12 @@ public abstract class Produto {
 	}
 	public void setPreco(double preco) {
 		this.preco = preco;
+	}
+	public String getCodigoBarra() {
+		return codigoBarra;
+	}
+	public void setCodigoBarra(String codigoBarra) {
+		this.codigoBarra = codigoBarra;
 	}
 	public abstract double calcularPreco();
 
