@@ -1,15 +1,13 @@
 package modelos;
 
 import java.util.ArrayList;
-
-import servicos.CaixaRegistradora;
+import java.util.Iterator;
 
 public class Caixa {
 	private int cod;
 	private Pessoa pessoa;
 	private ArrayList<Venda> vendas;
 	private Venda vendaAtual;
-	private CaixaRegistradora caixaReg;
 	
 	public int getCod() {
 		return cod;
@@ -29,13 +27,6 @@ public class Caixa {
 	public void setVendas(ArrayList<Venda> vendas) {
 		this.vendas = vendas;
 	}
-	public CaixaRegistradora getCaixaReg() {
-		return caixaReg;
-	}
-	public void setCaixaReg(CaixaRegistradora caixaReg) {
-		this.caixaReg = caixaReg;
-	}
-	
 	public Venda getVendaAtual() {
 		return vendaAtual;
 	}
@@ -43,32 +34,60 @@ public class Caixa {
 		this.vendaAtual = vendaAtual;
 	}
 	
-	public void iniciarCompra() {
+	public void iniciarVenda() {
 		Venda venda = new Venda();
 		venda.setRespVenda(this.getFuncionario());
 		venda.setCaixaVenda(this);
 		this.setVendaAtual(venda);
-		
-		CaixaRegistradora caixaReg = new CaixaRegistradora();
-		this.setCaixaReg(caixaReg);
-	}
-	
-	public void adicionarProduto(Produto produto) {
-		this.getVendaAtual().getItens().add(produto);
-	}
-	
-	public void receberPagamento(Pagamento pagamento) {
-		this.getCaixaReg().receberPagamento(pagamento, this.getVendaAtual());
 	}
 	
 	public Venda finalizarVenda() {
-		Double total = this.getCaixaReg().somarTotalCompra(this.getVendaAtual());
-		String relatorioVenda = this.getCaixaReg().gerarRelatorioCompra(this.getVendaAtual());
+		Double total = somarTotalVenda(this.getVendaAtual());
+		String relatorioVenda = gerarRelatorioVenda(this.getVendaAtual());
 		this.getVendaAtual().setTotal(total);
 		this.getVendaAtual().setRelatorioVenda(relatorioVenda);
 		this.getVendas().add(this.getVendaAtual());
 		
 		return this.getVendaAtual();
+	}
+	
+	public void adicionarProduto(Produto produto) {
+		this.getVendaAtual().getItens().add(produto);		
+	}
+	
+	public Double somarTotalVenda(Venda venda) {
+		Double resultado = 0.0;
+		ArrayList<Produto> itens = venda.getItens();
+		for(int i =0; i < itens.size(); i++) {
+			resultado += itens.get(i).getPreco();
+		}
+		return resultado;
+	}
+	
+	public void receberPagamento(Pagamento pagamento) {
+		this.getVendaAtual().setPagamento(pagamento);
+	}
+	
+	public String gerarRelatorioVenda(Venda venda) {
+		ArrayList<Produto> itens = venda.getItens();
+		String relatorioVenda = "";
+		relatorioVenda += "\t\t\t===== RELATORIO DE VENDAS =====\t\t\t\n";
+		relatorioVenda += "Vendedor: " + venda.getRespVenda().getNome() + "\n";
+		relatorioVenda += "Produtos: \n";
+		
+		Iterator it = itens.iterator();
+		Produto prod;
+		
+		while(it.hasNext()) {
+			prod = (Produto) it.next();
+			relatorioVenda += "-----------------------------------------\n";
+			relatorioVenda += "Item: " + prod.getNome() + " ";
+			relatorioVenda += "Preco: " + prod.getPreco() + "\n";
+			relatorioVenda += "-----------------------------------------";
+		}
+		
+		relatorioVenda += "Total: " + venda.getTotal() + "\n";
+		return relatorioVenda;
 	}
 
 }
