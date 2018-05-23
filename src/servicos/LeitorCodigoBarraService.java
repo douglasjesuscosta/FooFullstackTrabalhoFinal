@@ -1,14 +1,13 @@
 package servicos;
 
-import modelos.Estoque;
 import modelos.Produto;
 
-public class LeitorCodigoBarra {
+public class LeitorCodigoBarraService {
 
 	public String preçoProduto(String codigoBarra) {
-		Estoque estoque = Estoque.getInstancia();
+		EstoqueService estoqueService = new EstoqueService();
 		
-		Produto produto = estoque.getProdutoByCodigoBarra(codigoBarra);
+		Produto produto = estoqueService.getProdutoByCodigoBarra(codigoBarra);
 		
 		if(produto == null)
 			return "Produto não encontrado!";

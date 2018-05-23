@@ -15,10 +15,10 @@ public class Caixa {
 	public void setCod(int cod) {
 		this.cod = cod;
 	}
-	public Pessoa getFuncionario() {
+	public Pessoa getPessoa() {
 		return this.pessoa;
 	}
-	public void setFuncionario(Pessoa pessoa) {
+	public void setPessoa(Pessoa pessoa) {
 		this.pessoa = pessoa;
 	}
 	public ArrayList<Venda> getVendas() {
@@ -36,7 +36,7 @@ public class Caixa {
 	
 	public void iniciarVenda() {
 		Venda venda = new Venda();
-		venda.setRespVenda(this.getFuncionario());
+		venda.setRespVenda(this.getPessoa());
 		venda.setCaixaVenda(this);
 		this.setVendaAtual(venda);
 	}
