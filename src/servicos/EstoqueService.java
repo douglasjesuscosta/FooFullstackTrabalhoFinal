@@ -14,6 +14,13 @@ public class EstoqueService {
 		produtos.add(produto);
 	}
 	
+	public List<Produto> getProdutos() {
+		return produtos;
+	}
+	public void setProdutos(List<Produto> produtos) {
+		this.produtos = produtos;
+	}
+
 	public boolean verificarCodigo(int codigo) {
 		
 		for (Produto produto : produtos) {

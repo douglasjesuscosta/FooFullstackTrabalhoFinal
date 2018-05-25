@@ -7,7 +7,10 @@ public class Caixa {
 	private int cod;
 	private Pessoa pessoa;
 	private ArrayList<Venda> vendas;
-	private Venda vendaAtual;
+	
+	public Caixa() {
+		vendas = new ArrayList<Venda>();
+	}
 	
 	public int getCod() {
 		return cod;
@@ -26,46 +29,6 @@ public class Caixa {
 	}
 	public void setVendas(ArrayList<Venda> vendas) {
 		this.vendas = vendas;
-	}
-	public Venda getVendaAtual() {
-		return vendaAtual;
-	}
-	public void setVendaAtual(Venda vendaAtual) {
-		this.vendaAtual = vendaAtual;
-	}
-	
-	public void iniciarVenda() {
-		Venda venda = new Venda();
-		venda.setRespVenda(this.getPessoa());
-		venda.setCaixaVenda(this);
-		this.setVendaAtual(venda);
-	}
-	
-	public Venda finalizarVenda() {
-		Double total = somarTotalVenda(this.getVendaAtual());
-		String relatorioVenda = gerarRelatorioVenda(this.getVendaAtual());
-		this.getVendaAtual().setTotal(total);
-		this.getVendaAtual().setRelatorioVenda(relatorioVenda);
-		this.getVendas().add(this.getVendaAtual());
-		
-		return this.getVendaAtual();
-	}
-	
-	public void adicionarProduto(Produto produto) {
-		this.getVendaAtual().getItens().add(produto);		
-	}
-	
-	public Double somarTotalVenda(Venda venda) {
-		Double resultado = 0.0;
-		ArrayList<Produto> itens = venda.getItens();
-		for(int i =0; i < itens.size(); i++) {
-			resultado += itens.get(i).getPreco();
-		}
-		return resultado;
-	}
-	
-	public void receberPagamento(Pagamento pagamento) {
-		this.getVendaAtual().setPagamento(pagamento);
 	}
 	
 	public String gerarRelatorioVenda(Venda venda) {
@@ -89,5 +52,25 @@ public class Caixa {
 		relatorioVenda += "Total: " + venda.getTotal() + "\n";
 		return relatorioVenda;
 	}
+	
+	public String gerarRelatorioVendas() {
+		
+		String relatorioVendas = "";
+		relatorioVendas += "\t\t\t===== RELATORIO DE VENDAS CAIXA" + this.getCod() +"=====\t\t\t\n";
+		
+		Iterator it = vendas.iterator();
+		Venda vend;
+		
+		while(it.hasNext()) {
+			vend = (Venda) it.next();
+			relatorioVendas += "-------------------VENDA----------------------\n";
+			relatorioVendas += "Realizada por : " + vend.getRespVenda().getNome() + " ";
+			relatorioVendas += "Total: " + vend.getTotal() + "\n";
+			relatorioVendas += "-----------------------------------------\n";
+		}
+	
+		return relatorioVendas;
+	}
+	
 
 }

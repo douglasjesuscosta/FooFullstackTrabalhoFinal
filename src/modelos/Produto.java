@@ -7,7 +7,7 @@ public abstract class Produto {
 	private String codigoBarra;
 	private String nome;
 	private String marca;
-	private Date prazoValidade;
+	private Data prazoValidade;
 	private String descricao;
 	private double preco;
 	
@@ -37,10 +37,10 @@ public abstract class Produto {
 		this.nome = nome;
 	}
 	
-	public Date getPrazoValidade() {
+	public Data getPrazoValidade() {
 		return prazoValidade;
 	}
-	public void setPrazoValidade(Date prazoValidade) {
+	public void setPrazoValidade(Data prazoValidade) {
 		this.prazoValidade = prazoValidade;
 	}
 	public double getPreco() {
