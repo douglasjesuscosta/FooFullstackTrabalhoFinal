@@ -579,19 +579,11 @@ public class Main {
 		c2.setCod(2);
 		
 		Caixa c3 = new Caixa();
-		c2.setCod(3);
-		
-		Caixa c4 = new Caixa();
-		c2.setCod(4);
-		
-		Caixa c5 = new Caixa();
-		c2.setCod(5);
+		c3.setCod(3);
 		
 		caixaService.adicionarCaixa(c1);
 		caixaService.adicionarCaixa(c2);
 		caixaService.adicionarCaixa(c3);
-		caixaService.adicionarCaixa(c4);
-		caixaService.adicionarCaixa(c5);
 	}
 	
 	public static void visualizarProdutos() {
