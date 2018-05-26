@@ -9,7 +9,19 @@ import modelos.Pessoa;
 
 public class CaixaService {
 
-	private List<Caixa> caixas = new ArrayList<>();
+	private static CaixaService caixaService;
+	private List<Caixa> caixas;	
+	
+	private CaixaService() {
+		caixas = new ArrayList<>();
+	}
+	
+	public static CaixaService getInstanciaCaixaService() {
+		if(caixaService == null)
+			return caixaService = new CaixaService();
+		else 
+			return caixaService;
+	}
 	
 	public List<Caixa> getCaixas() {
 		return caixas;

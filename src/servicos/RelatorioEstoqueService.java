@@ -11,9 +11,17 @@ import modelos.ProdutoUnidade;
 import modelos.Venda;
 
 public class RelatorioEstoqueService {
+	
+	private static RelatorioEstoqueService relatorioEstoqueService;
 	private EstoqueService estoque;
 	private CaixaService caixa;
-
+	
+	public static RelatorioEstoqueService getInstanciaRelatorioEstoqueService() {
+		if(relatorioEstoqueService == null)
+			return relatorioEstoqueService = new RelatorioEstoqueService();
+		else
+			return relatorioEstoqueService;
+	}
 	
 	public EstoqueService getEstoqueService() {
 		return estoque;

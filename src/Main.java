@@ -24,10 +24,12 @@ import servicos.VendasService;
 
 public class Main {
 
-	private static CaixaService caixaService = new CaixaService();
-	private static FuncionarioService funcionarioService = new FuncionarioService();
-	private static VendasService vendasService = new VendasService();
+	private static CaixaService caixaService = CaixaService.getInstanciaCaixaService();
+	private static FuncionarioService funcionarioService = FuncionarioService.getInstanciaFuncionarioService();
+	private static VendasService vendasService = VendasService.getInstanciaVendasService();
 	private static EstoqueService estoqueService = EstoqueService.getInstanciaEstoqueService();
+	private static RelatorioVendasService relatorioVendasService = RelatorioVendasService.getInstanciaRelatorioVendasService();
+	private static RelatorioEstoqueService relatorioEstoqueService = RelatorioEstoqueService.getInstanciaRelatorioEstoqueService();
 
 	public static void main(String[] args) {
 
@@ -71,6 +73,8 @@ public class Main {
 	}
 
 	private static void cliente() {
+		LeitorCodigoBarraService leitorCodigoBarra = new LeitorCodigoBarraService();	
+		
 		Scanner leitor = new Scanner(System.in);
 
 		System.out.println("Digite a operação desejada \n1 - Consultar o preço dos produtos em leitores \n0 - Sair");
@@ -80,11 +84,10 @@ public class Main {
 
 			switch (op) {
 			case 1:
-				LeitorCodigoBarraService leitorCodigoBarra = new LeitorCodigoBarraService();
-
+				
 				System.out.println("Digite o código de barra do produto:");
 				long codigoBarra = leitor.nextLong();
-				System.out.println(leitorCodigoBarra.preçoProduto(Long.toString(codigoBarra)));
+				System.out.printf("Preço do produto: %.2f", leitorCodigoBarra.preçoProduto(Long.toString(codigoBarra)));
 				break;
 
 			default:
@@ -246,6 +249,7 @@ public class Main {
 
 	private static void fazervenda(Caixa caixa) {
 		VendaService vendaService = new VendaService();
+		
 		vendaService.iniciarVenda(caixa);
 
 		Scanner leitor = new Scanner(System.in);
@@ -456,10 +460,9 @@ public class Main {
 
 	}
 
-	public static void relatorioVendas() {
-		RelatorioVendasService relatorio = new RelatorioVendasService();
-		relatorio.setCaixaService(caixaService);
-		String relatorioVendas = relatorio.relatorioVendas();
+	public static void relatorioVendas() {		
+		relatorioVendasService.setCaixaService(caixaService);
+		String relatorioVendas = relatorioVendasService.relatorioVendas();
 
 		System.out.println(relatorioVendas);
 	}
@@ -478,11 +481,10 @@ public class Main {
 		System.out.println("Digite o ano: ");
 		data.setAno(leitor.nextInt());
 
-		RelatorioEstoqueService relatorio = new RelatorioEstoqueService();
-		relatorio.setEstoqueService(estoqueService);
-		relatorio.setCaixaService(caixaService);
+		relatorioEstoqueService.setEstoqueService(estoqueService);
+		relatorioEstoqueService.setCaixaService(caixaService);
 
-		String relatorioEstoque = relatorio.gerarRelatorio(data);
+		String relatorioEstoque = relatorioEstoqueService.gerarRelatorio(data);
 
 		System.out.println(relatorioEstoque);
 	}

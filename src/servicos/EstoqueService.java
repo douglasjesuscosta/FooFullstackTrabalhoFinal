@@ -13,7 +13,7 @@ public class EstoqueService {
 	private List<Produto> produtos;
 	
 	private EstoqueService() {
-		this.produtos = new ArrayList<Produto>();
+		produtos = new ArrayList<Produto>();
 	}
 	
 	public static EstoqueService getInstanciaEstoqueService() {

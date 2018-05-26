@@ -7,10 +7,18 @@ import modelos.Pessoa;
 
 public class FuncionarioService {
 	
+	private static FuncionarioService funcionarioService;
 	private ArrayList<Pessoa> funcionarios;
 	
-	public FuncionarioService() {
-		funcionarios = new ArrayList<Pessoa>();
+	private FuncionarioService() {
+		funcionarios = new ArrayList<>();
+	}
+	
+	public static FuncionarioService getInstanciaFuncionarioService() {
+		if(funcionarioService == null)
+			return funcionarioService = new FuncionarioService();
+		else
+			return funcionarioService;
 	}
 	
 	public ArrayList<Pessoa> getFuncionarios() {

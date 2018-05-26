@@ -3,7 +3,7 @@ package servicos;
 import modelos.Produto;
 
 public class LeitorCodigoBarraService {
-
+		
 	public String preçoProduto(String codigoBarra) {
 		EstoqueService estoqueService = EstoqueService.getInstanciaEstoqueService();
 		

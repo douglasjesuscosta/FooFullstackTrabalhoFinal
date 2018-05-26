@@ -14,9 +14,6 @@ public class VendaService {
 
 	private Venda venda;
 	private EstoqueService estoqueService = EstoqueService.getInstanciaEstoqueService();
-	
-	public VendaService() {
-	}
 
 	public Venda getVenda() {
 		return venda;

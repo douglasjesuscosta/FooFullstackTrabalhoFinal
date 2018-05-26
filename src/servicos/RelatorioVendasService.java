@@ -1,15 +1,20 @@
 package servicos;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 
 import modelos.Caixa;
 
 public class RelatorioVendasService {
+	private static RelatorioVendasService relatorioVendasService;
 	private CaixaService caixaService;
 	
+	public static RelatorioVendasService getInstanciaRelatorioVendasService() {
+		if(relatorioVendasService == null)
+			return relatorioVendasService = new RelatorioVendasService();
+		else
+			return relatorioVendasService;
+	}
 	
-
 	public CaixaService getCaixaService() {
 		return caixaService;
 	}
