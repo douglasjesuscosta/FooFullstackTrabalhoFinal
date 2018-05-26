@@ -124,7 +124,7 @@ public class RelatorioEstoqueService {
 		relatorio += "Produtos no inicio do dia: " + data.getDia() + "/" + data.getMes() + "/" + data.getAno() + "\n";
 		Iterator it2 = produtosInicioDia.iterator();
 		while(it2.hasNext()) {
-			prod = (Produto) it.next();
+			prod = (Produto) it2.next();
 			relatorio += "Produto: " + prod.getNome() + "\n";
 			
 			if(prod instanceof ProdutoQuilo) {

@@ -283,7 +283,7 @@ public class Main {
 		data.setMes(leitor.nextInt());
 		
 		System.out.println("Ano: ");
-		data.setMes(leitor.nextInt());
+		data.setAno(leitor.nextInt());
 		
 		vendaService.getVenda().setDataVenda(data);
 
