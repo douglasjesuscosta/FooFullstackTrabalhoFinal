@@ -41,6 +41,7 @@ public class Main {
 
 		System.out.println("Digite a sua função \n1 - Gerente \n2 - Funcionário \n3 - Cliente \n0 - Sair");
 		int op = leitor.nextInt();
+		leitor.nextLine();
 
 		while (op != 0) {
 			switch (op) {
@@ -62,14 +63,11 @@ public class Main {
 
 			default:
 				System.out.println("Código inválido!");
-				;
 			}
 
 			System.out.println("Digite a sua função \n1 - Gerente \n2 - Funcionário \n3 - Cliente \n0 - Sair");
 			op = leitor.nextInt();
 		}
-
-		leitor.close();
 	}
 
 	private static void cliente() {
@@ -87,7 +85,7 @@ public class Main {
 				
 				System.out.println("Digite o código de barra do produto:");
 				long codigoBarra = leitor.nextLong();
-				System.out.printf("Preço do produto: %.2f", leitorCodigoBarra.preçoProduto(Long.toString(codigoBarra)));
+				System.out.printf("Preço do produto: R$ %.2f\n", Double.parseDouble(leitorCodigoBarra.preçoProduto(Long.toString(codigoBarra))));
 				break;
 
 			default:
@@ -97,9 +95,8 @@ public class Main {
 			System.out
 					.println("Digite a operação desejada \n1 - consultem o preço dos produtos em leitores \n0 - Sair");
 			op = leitor.nextInt();
+			leitor.nextLine();
 		}
-
-		leitor.close();
 	}
 
 	private static void funcionario() {
