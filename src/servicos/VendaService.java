@@ -35,18 +35,18 @@ public class VendaService {
 
 	public void adicionarProdutoUnidade(int codProduto, int qntProduto) {
 		ProdutoUnidade produtoUnidade = (ProdutoUnidade) estoqueService.getProduto(codProduto);
-		venda.adicionaProduto(produtoUnidade); 
+		this.venda.adicionaProduto(produtoUnidade); 
 	}
 	
 	public void iniciarVenda(Caixa caixa) {
-		Venda venda = new Venda();
+		this.venda = new Venda();
 		venda.setRespVenda(caixa.getPessoa());
 		venda.setCaixaVenda(caixa);
 		this.setVenda(venda);
 	}
 	
 	public Venda finalizarVenda(Caixa caixa) {
-		Double total = somarTotalVenda(this.getVenda());
+		Double total = somarTotalVenda();
 		String relatorioVenda = caixa.gerarRelatorioVenda(this.getVenda());
 		this.getVenda().setTotal(total);
 		this.getVenda().setRelatorioVenda(relatorioVenda);
@@ -58,11 +58,11 @@ public class VendaService {
 		this.getVenda().getItens().add(produto);		
 	}
 	
-	public Double somarTotalVenda(Venda venda) {
+	public Double somarTotalVenda() {
 		Double resultado = 0.0;
 		ArrayList<Produto> itens = venda.getItens();
 		for(int i =0; i < itens.size(); i++) {
-			resultado += itens.get(i).getPreco();
+			resultado += itens.get(i).calcularPreco();
 		}
 		return resultado;
 	}

@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 
@@ -32,6 +33,11 @@ public class Main {
 
 		Scanner leitor = new Scanner(System.in);
 
+		testaProdutos();
+		testeFuncionarios();
+		testarCaixa();
+		
+		
 		System.out.println("Digite a sua função \n1 - Gerente \n2 - Funcionário \n3 - Cliente \n0 - Sair");
 		int op = leitor.nextInt();
 
@@ -97,9 +103,10 @@ public class Main {
 	private static void funcionario() {
 		Scanner leitor = new Scanner(System.in);
 
-		System.out.println("Digite a operação desejada: \n 1 - Iniciar o trabalho em um caixa \n"
-														+ "2 - Deixar posto de trabalho \n"
-														+ "0 - Sair \n");
+		System.out.println("Digite a operação desejada: \n "
+				+ "1 - Iniciar o trabalho em um caixa \n"
+				+ "2 - Deixar posto de trabalho \n"
+				+ "0 - Sair \n");
 		int op = leitor.nextInt();
 
 		while (op != 0) {
@@ -129,6 +136,8 @@ public class Main {
 													   +"3 - Cadastrar Produtos\n"
 													   +"4 - Relatorio Vendas\n"
 													   +"5 - Relatorio Estoque\n"
+													   +"6 - Visualizar funcionarios\n"
+													   +"7 - Visualizar produtos\n"
 													   + "0 - Sair");
 		int op = leitor.nextInt();
 
@@ -150,6 +159,12 @@ public class Main {
 			case 5:
 				relatorioEstoque();
 				break;
+			case 6:
+				visualizarFuncionarios();
+				break;
+			case 7:
+				visualizarProdutos();
+				break;
 			default:
 				break;
 			}
@@ -159,6 +174,8 @@ public class Main {
 					   +"3 - Cadastrar Produtos\n"
 					   +"4 - Relatorio Vendas\n"
 					   +"5 - Relatorio Estoque\n"
+					   +"6 - Visualizar funcionarios\n"
+					   +"7 - Visualizar produtos\n"
 					   + "0 - Sair");
 			op = leitor.nextInt();
 		}
@@ -170,9 +187,10 @@ public class Main {
 	private static void iniciarTrabalhoCaixa() {
 		Scanner leitor = new Scanner(System.in);
 
-		System.out.println("Digite a operação desejada: \n 1 - Visualizar caixas livres "
-				+ "\n2 - Escolher Caixa para trabalhar"
-				+ "\n0 - Sair");
+		System.out.println("Digite a operação desejada:\n"
+				+ "1 - Visualizar caixas livres \n"
+				+ "2 - Escolher Caixa para trabalhar \n"
+				+ "0 - Sair\n");
 		int op = leitor.nextInt();
 		
 		while (op != 0) {
@@ -196,9 +214,19 @@ public class Main {
 				int codFuncionario = leitor.nextInt();
 				Pessoa pessoa = funcionarioService.bucarFuncionario(codFuncionario);
 				
+				if(pessoa == null) {
+					System.out.println("Pessoa não encontrada");
+					break;
+				}
+			
 				System.out.println("Digite o caixa que deseja trabalhar:");
 				int codCaixa = leitor.nextInt();
 				Caixa caixa = caixaService.bucarCaixa(codCaixa);
+				
+				if(caixa == null) {
+					System.out.println("Caixa não encontrado");
+					break;
+				}
 				
 				if(caixaService.iniciarCaixa(caixa, pessoa))
 					operarCaixaFuncionario(caixa);
@@ -208,9 +236,10 @@ public class Main {
 				break;
 			}
 
-			System.out.println("Digite a operação desejada: \n 1 - Visualizar caixas livres "
-					+ "\n2 - Escolher Caixa para trabalhar"
-					+ "\n0 - Sair");
+			System.out.println("Digite a operação desejada: \n"
+					+ "1 - Visualizar caixas livres\n"
+					+ "2 - Escolher Caixa para trabalhar\n"
+					+ "0 - Sair\n");
 			op = leitor.nextInt();
 		}
 	}
@@ -218,8 +247,9 @@ public class Main {
 	private static void operarCaixaFuncionario(Caixa caixa) {
 		Scanner leitor = new Scanner(System.in);
 
-		System.out.println("Digite a operação desejada: \n1 - Iniciar venda "
-				+ "\n0 - Sair");
+		System.out.println("Digite a operação desejada:\n"
+				+ "1 - Iniciar venda\n"
+				+ "0 - Sair\n");
 		int op = leitor.nextInt();
 		
 		while (op != 0) {
@@ -227,16 +257,18 @@ public class Main {
 			case 1:
 				fazervenda(caixa);
 				break;
-
 			default:
 				break;
 			}
+			System.out.println("Digite a operação desejada: \n"
+					+ "1 - Iniciar venda \n"
+					+ "0 - Sair \n");
+			op = leitor.nextInt();
 		}
 		
 	}
 
 	private static void fazervenda(Caixa caixa) {
-		EstoqueService estoqueService = new EstoqueService();
 		VendaService vendaService = new VendaService();
 		vendaService.iniciarVenda(caixa);
 		
@@ -255,8 +287,9 @@ public class Main {
 		
 		vendaService.getVenda().setDataVenda(data);
 
-		System.out.println("Digite a operação desejada \n1 - Iniciar adição de produtos "
-				+ "\n0 - Terminar venda");
+		System.out.println("Digite a operação desejada: \n"
+				+ "1 - Iniciar adição de produtos\n"
+				+ "0 - Terminar venda\n");
 		int op = leitor.nextInt();
 		
 		while(op != 0) {
@@ -273,27 +306,34 @@ public class Main {
 					System.out.println("Digite quantas unidades: ");
 					int qntProduto = leitor.nextInt();
 					
+					((ProdutoUnidade) produto).setQuantidade(qntProduto);
+					
 					if(estoqueService.verificarQuantidade(codProduto, qntProduto))
-						vendaService.adicionarProdutoUnidade(codProduto, qntProduto);
+						vendaService.adicionarProduto(produto);
 					else
 						System.out.println("Quantidade indisponível!");										
 				} else {
 					System.out.println("Digite o quilo: ");
 					double kgProduto = leitor.nextDouble();
+					
+					((ProdutoQuilo) produto).setQuilo(kgProduto);
+					vendaService.adicionarProduto(produto);
 				}
 				
 			} else {
 				System.out.println("Código inválido!");
 			}
 			
-			System.out.println("Digite a operação desejada \n1 - iniciar produto "
-					+ "\n0 - Terminar venda");
+			System.out.println("Digite a operação desejada: \n"
+					+ "1 - Continuar adição de produtos\n"
+					+ "0 - Terminar venda\n");
 			op = leitor.nextInt();
 		}
-		vendaService.somarTotalVenda(vendaService.getVenda());
-		Double valorPagamento = vendaService.getVenda().getTotal();
+		vendaService.finalizarVenda(caixa);
 		
-		System.out.println("Pagamente: \n");
+		System.out.println(vendaService.getVenda().getRelatorioVenda());
+		System.out.println("Total a pagar: " + vendaService.getVenda().getTotal());
+		System.out.println("Opções de Pagamento:");
 		System.out.println("Digite a opção de pagamento:\n1 - Cartão de crédito\n2 - Dinheiro:");
 		int opPagamento = leitor.nextInt();
 		
@@ -311,14 +351,16 @@ public class Main {
 			Double pagamento = leitor.nextDouble();
 			PagamentoDinheiro pagamentoDinheiro = new PagamentoDinheiro();
 			pagamentoDinheiro.setValorPagamento(vendaService.getVenda().getTotal());
-			
 			pagamentoDinheiro.setValorPago(pagamento);
+			pagamentoDinheiro.calcularTroco(pagamento);
+			
 			vendaService.getVenda().setPagamento(pagamentoDinheiro);
 			System.out.println("Troco: " + pagamentoDinheiro.getTroco());
 		}
 		
 		Venda venda = vendaService.finalizarVenda(caixa);
 		vendasService.adicionarVenda(venda);
+		caixa.adicionarVenda(venda);
 		
 	}
 	
@@ -362,7 +404,7 @@ public class Main {
 		Scanner leitor = new Scanner(System.in);
 		
 		System.out.println("-------Cadastro de produto-------\n");
-		System.out.println("Digite a medida do produto:\n 1 - Quilos\n 2- Unidades");
+		System.out.println("Digite a medida do produto:\n1 - Quilos\n 2- Unidades");
 		int op = leitor.nextInt();
 		leitor.nextLine();
 		
@@ -421,8 +463,9 @@ public class Main {
 	
 	public static void relatorioVendas() {
 		RelatorioVendasService relatorio = new RelatorioVendasService();
+		relatorio.setCaixaService(caixaService);
 		String relatorioVendas = relatorio.relatorioVendas();
-		relatorio.setCaixas((ArrayList<Caixa>) caixaService.getCaixas());
+	
 		
 		System.out.println(relatorioVendas);
 	}
@@ -460,14 +503,122 @@ public class Main {
 		
 		Funcionario fun2 = new Funcionario();
 		fun2.setNome("Elizabeth");
-		fun1.setCpf(314134124);
-		fun1.setSalario(1123);
-		fun1.setCodigo(2);
+		fun2.setCpf(314134124);
+		fun2.setSalario(1123);
+		fun2.setCodigo(2);
 		
 		Funcionario fun3 = new Funcionario();
-		fun2.setNome("Lazaro");
-		fun1.setCpf(314134124);
-		fun1.setSalario(1123);
-		fun1.setCodigo(3);
+		fun3.setNome("Lazaro");
+		fun3.setCpf(314134124);
+		fun3.setSalario(1123);
+		fun3.setCodigo(3);
+		
+		funcionarioService.adicionarFuncionario(fun1);
+		funcionarioService.adicionarFuncionario(fun2);
+		funcionarioService.adicionarFuncionario(fun3);
 	}
+	
+	public static void testaProdutos() {
+		ProdutoQuilo prodQ = new ProdutoQuilo();
+		prodQ.setCodigo(1);
+		prodQ.setNome("Carne");
+		prodQ.setDescricao("Produto carne");
+		prodQ.setMarca("Ares");
+		prodQ.setPreco(15.00);
+		prodQ.setQuilo(45);
+		
+		ProdutoQuilo prodQ2 = new ProdutoQuilo();
+		prodQ2.setCodigo(2);
+		prodQ2.setNome("Carne");
+		prodQ2.setDescricao("Produto carne");
+		prodQ2.setMarca("Ares");
+		prodQ2.setPreco(19.00);
+		prodQ2.setQuilo(44);
+		
+		ProdutoQuilo prodQ3 = new ProdutoQuilo();
+		prodQ3.setCodigo(3);
+		prodQ3.setNome("Carne");
+		prodQ3.setDescricao("Produto carne");
+		prodQ3.setMarca("Ares");
+		prodQ3.setPreco(13.00);
+		prodQ3.setQuilo(44);
+		
+		ProdutoUnidade prodU4 = new ProdutoUnidade();
+		prodU4.setCodigo(4);
+		prodU4.setNome("Toddy");
+		prodU4.setDescricao("Achocolatado");
+		prodU4.setMarca("Toddy");
+		prodU4.setPreco(13.00);
+		prodU4.setQuantidade(10);
+		
+		ProdutoUnidade prodU5 = new ProdutoUnidade();
+		prodU5.setCodigo(5);
+		prodU5.setNome("Sabonete Dove");
+		prodU5.setDescricao("Sabonete");
+		prodU5.setMarca("Dove");
+		prodU5.setPreco(7.00);
+		prodU5.setQuantidade(10);
+		
+		estoqueService.adicionarProduto(prodQ);
+		estoqueService.adicionarProduto(prodQ2);
+		estoqueService.adicionarProduto(prodQ3);
+		estoqueService.adicionarProduto(prodU4);
+		estoqueService.adicionarProduto(prodU5);
+	}
+	
+	public static void testarCaixa() {
+		Caixa c1 = new Caixa();
+		c1.setCod(1);
+		
+		Caixa c2 = new Caixa();
+		c2.setCod(2);
+		
+		Caixa c3 = new Caixa();
+		c2.setCod(3);
+		
+		Caixa c4 = new Caixa();
+		c2.setCod(4);
+		
+		Caixa c5 = new Caixa();
+		c2.setCod(5);
+		
+		caixaService.adicionarCaixa(c1);
+		caixaService.adicionarCaixa(c2);
+		caixaService.adicionarCaixa(c3);
+		caixaService.adicionarCaixa(c4);
+		caixaService.adicionarCaixa(c5);
+	}
+	
+	public static void visualizarProdutos() {
+		
+		Iterator it = estoqueService.getProdutos().iterator();
+		Produto prod;
+		
+		System.out.println("===========PRODUTOS==========");
+		
+		while(it.hasNext()) {
+			prod = (Produto) it.next();
+			System.out.println("Nome do produto: " + prod.getNome());
+			System.out.println("Codigo do produto: " + prod.getCodigo());
+			
+		}
+		
+	}
+	
+	public static void visualizarFuncionarios() {
+		
+		Iterator it = funcionarioService.getFuncionarios().iterator();
+		Funcionario func;
+		
+		System.out.println("===========FUNCIONARIOS==========");
+		
+		while(it.hasNext()) {
+			func = (Funcionario) it.next();
+			System.out.println("Nome do produto: " + func.getNome());
+			System.out.println("Codigo do produto: " + func.getCodigo());
+			
+		}
+		
+	}
+	
 }

@@ -25,6 +25,7 @@ public class CaixaService {
 	}
 	
 	public void adicionarCaixa(Caixa caixa) {
+		this.getCaixasLivres().add(caixa);
 		this.getCaixas().add(caixa);
 	}
 	
@@ -56,11 +57,6 @@ public class CaixaService {
 
 	public boolean iniciarCaixa(Caixa caixaDesejado, Pessoa pessoa) {
 		boolean iniciou = false;
-		
-		for (Caixa caixa : caixas) {
-			if(caixa.getPessoa().getCodigo() == pessoa.getCodigo())
-				iniciou = false;
-		}
 		
 		for (Caixa caixa : caixas) {
 			if(caixa.getCod() == caixaDesejado.getCod()) {

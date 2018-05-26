@@ -31,6 +31,10 @@ public class Caixa {
 		this.vendas = vendas;
 	}
 	
+	public void adicionarVenda(Venda venda) {
+		this.getVendas().add(venda);
+	}
+	
 	public String gerarRelatorioVenda(Venda venda) {
 		ArrayList<Produto> itens = venda.getItens();
 		String relatorioVenda = "";
@@ -44,29 +48,32 @@ public class Caixa {
 		while(it.hasNext()) {
 			prod = (Produto) it.next();
 			relatorioVenda += "-----------------------------------------\n";
-			relatorioVenda += "Item: " + prod.getNome() + " ";
+			relatorioVenda += "Item: " + prod.getNome() + "\n";
+			
+			if(prod instanceof ProdutoQuilo) {
+				relatorioVenda += "Quilo: " + ((ProdutoQuilo)prod).getQuilo() + "\n";
+			}else {
+				relatorioVenda += "Quantidae: " + ((ProdutoUnidade)prod).getQuantidade() + "\n";
+			}
 			relatorioVenda += "Preco: " + prod.getPreco() + "\n";
-			relatorioVenda += "-----------------------------------------";
+			relatorioVenda += "Preco total: " + prod.calcularPreco() + "\n";
+			relatorioVenda += "-----------------------------------------\n";
 		}
 		
-		relatorioVenda += "Total: " + venda.getTotal() + "\n";
 		return relatorioVenda;
 	}
 	
 	public String gerarRelatorioVendas() {
 		
 		String relatorioVendas = "";
-		relatorioVendas += "\t\t\t===== RELATORIO DE VENDAS CAIXA" + this.getCod() +"=====\t\t\t\n";
-		
 		Iterator it = vendas.iterator();
 		Venda vend;
 		
 		while(it.hasNext()) {
 			vend = (Venda) it.next();
-			relatorioVendas += "-------------------VENDA----------------------\n";
+			relatorioVendas += "VENDA\n";
 			relatorioVendas += "Realizada por : " + vend.getRespVenda().getNome() + " ";
 			relatorioVendas += "Total: " + vend.getTotal() + "\n";
-			relatorioVendas += "-----------------------------------------\n";
 		}
 	
 		return relatorioVendas;

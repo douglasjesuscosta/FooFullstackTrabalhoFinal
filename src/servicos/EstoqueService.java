@@ -8,10 +8,14 @@ import modelos.ProdutoUnidade;
 
 public class EstoqueService {
 
-	private List<Produto> produtos = new ArrayList<>();
+	private List<Produto> produtos;
+	
+	public EstoqueService() {
+		this.produtos = new ArrayList<Produto>();
+	}
 	
 	public void adicionarProduto(Produto produto) {
-		produtos.add(produto);
+		this.produtos.add(produto);
 	}
 	
 	public List<Produto> getProdutos() {

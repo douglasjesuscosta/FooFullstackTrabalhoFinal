@@ -13,7 +13,14 @@ public class FuncionarioService {
 		funcionarios = new ArrayList<Pessoa>();
 	}
 	
-	
+	public ArrayList<Pessoa> getFuncionarios() {
+		return funcionarios;
+	}
+
+	public void setFuncionarios(ArrayList<Pessoa> funcionarios) {
+		this.funcionarios = funcionarios;
+	}
+
 	public void adicionarFuncionario(Pessoa pessoa) {
 		funcionarios.add(pessoa);
 	}

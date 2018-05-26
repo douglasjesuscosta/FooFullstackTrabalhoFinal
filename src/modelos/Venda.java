@@ -73,7 +73,7 @@ public class Venda {
 	}
 	
 	public void adicionaProduto(Produto produto) {
-		itens.add(produto);
+		this.itens.add(produto);
 	}
 	
 	

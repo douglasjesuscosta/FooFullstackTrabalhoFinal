@@ -6,19 +6,20 @@ import java.util.Iterator;
 import modelos.Caixa;
 
 public class RelatorioVendasService {
-	private ArrayList<Caixa> caixas;
+	private CaixaService caixaService;
 	
-	public ArrayList<Caixa> getCaixas() {
-		return caixas;
+	
+
+	public CaixaService getCaixaService() {
+		return caixaService;
 	}
-	
-	public void setCaixas(ArrayList<Caixa> caixas) {
-		this.caixas = caixas;
+	public void setCaixaService(CaixaService caixaService) {
+		this.caixaService = caixaService;
 	}
 
 	public String relatorioVendas() {
 		
-		Iterator it = caixas.iterator();
+		Iterator it = caixaService.getCaixas().iterator();
 		Caixa caixa;
 		String relatorio = "";
 		
