@@ -8,10 +8,18 @@ import modelos.ProdutoUnidade;
 
 public class EstoqueService {
 
+	private static EstoqueService estoqueService;
 	private List<Produto> produtos;
 	
-	public EstoqueService() {
+	private EstoqueService() {
 		this.produtos = new ArrayList<Produto>();
+	}
+	
+	public static EstoqueService getInstanciaEstoqueService() {
+		if(estoqueService == null)
+			return estoqueService = new EstoqueService();
+		else 
+			return estoqueService;
 	}
 	
 	public void adicionarProduto(Produto produto) {
@@ -40,6 +48,7 @@ public class EstoqueService {
 		for (Produto produto : produtos) {
 			if(codigoBarra.equals(produto.getCodigoBarra())) {
 				produtoSelecionado = produto;
+				break;
 			}
 		}
 		

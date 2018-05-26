@@ -27,7 +27,7 @@ public class Main {
 	private static CaixaService caixaService = new CaixaService();
 	private static FuncionarioService funcionarioService = new FuncionarioService();
 	private static VendasService vendasService = new VendasService();
-	private static EstoqueService estoqueService = new EstoqueService();
+	private static EstoqueService estoqueService = EstoqueService.getInstanciaEstoqueService();
 
 	public static void main(String[] args) {
 
@@ -521,6 +521,7 @@ public class Main {
 	public static void testaProdutos() {
 		ProdutoQuilo prodQ = new ProdutoQuilo();
 		prodQ.setCodigo(1);
+		prodQ.setCodigoBarra("1234");
 		prodQ.setNome("Carne");
 		prodQ.setDescricao("Produto carne");
 		prodQ.setMarca("Ares");
@@ -529,6 +530,7 @@ public class Main {
 		
 		ProdutoQuilo prodQ2 = new ProdutoQuilo();
 		prodQ2.setCodigo(2);
+		prodQ2.setCodigoBarra("1235");
 		prodQ2.setNome("Carne");
 		prodQ2.setDescricao("Produto carne");
 		prodQ2.setMarca("Ares");
@@ -537,6 +539,7 @@ public class Main {
 		
 		ProdutoQuilo prodQ3 = new ProdutoQuilo();
 		prodQ3.setCodigo(3);
+		prodQ3.setCodigoBarra("1236");
 		prodQ3.setNome("Carne");
 		prodQ3.setDescricao("Produto carne");
 		prodQ3.setMarca("Ares");
@@ -545,6 +548,7 @@ public class Main {
 		
 		ProdutoUnidade prodU4 = new ProdutoUnidade();
 		prodU4.setCodigo(4);
+		prodU4.setCodigoBarra("1237");
 		prodU4.setNome("Toddy");
 		prodU4.setDescricao("Achocolatado");
 		prodU4.setMarca("Toddy");
@@ -553,6 +557,7 @@ public class Main {
 		
 		ProdutoUnidade prodU5 = new ProdutoUnidade();
 		prodU5.setCodigo(5);
+		prodU5.setCodigoBarra("1238");
 		prodU5.setNome("Sabonete Dove");
 		prodU5.setDescricao("Sabonete");
 		prodU5.setMarca("Dove");

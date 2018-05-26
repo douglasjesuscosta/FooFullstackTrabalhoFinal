@@ -5,7 +5,7 @@ import modelos.Produto;
 public class LeitorCodigoBarraService {
 
 	public String preçoProduto(String codigoBarra) {
-		EstoqueService estoqueService = new EstoqueService();
+		EstoqueService estoqueService = EstoqueService.getInstanciaEstoqueService();
 		
 		Produto produto = estoqueService.getProdutoByCodigoBarra(codigoBarra);
 		

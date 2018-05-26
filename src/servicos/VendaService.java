@@ -12,7 +12,7 @@ import modelos.Venda;
 public class VendaService {
 
 	private Venda venda;
-	private EstoqueService estoqueService = new EstoqueService();
+	private EstoqueService estoqueService = EstoqueService.getInstanciaEstoqueService();
 	
 	public VendaService() {
 	}
