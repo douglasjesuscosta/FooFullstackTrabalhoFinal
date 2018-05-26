@@ -38,7 +38,7 @@ public class Caixa {
 	public String gerarRelatorioVenda(Venda venda) {
 		ArrayList<Produto> itens = venda.getItens();
 		String relatorioVenda = "";
-		relatorioVenda += "\t\t\t===== RELATORIO DE VENDAS =====\t\t\t\n";
+		relatorioVenda += "\t\t\t===== RELATORIO DA VENDA =====\t\t\t\n";
 		relatorioVenda += "Vendedor: " + venda.getRespVenda().getNome() + "\n";
 		relatorioVenda += "Produtos: \n";
 		
@@ -55,6 +55,7 @@ public class Caixa {
 			}else {
 				relatorioVenda += "Quantidae: " + ((ProdutoUnidade)prod).getQuantidade() + "\n";
 			}
+			relatorioVenda += "Descrição: " + prod.getDescricao() + "\n";
 			relatorioVenda += "Preco: " + prod.getPreco() + "\n";
 			relatorioVenda += "Preco total: " + prod.calcularPreco() + "\n";
 			relatorioVenda += "-----------------------------------------\n";
@@ -69,13 +70,18 @@ public class Caixa {
 		Iterator it = vendas.iterator();
 		Venda vend;
 		
-		while(it.hasNext()) {
-			vend = (Venda) it.next();
-			relatorioVendas += "VENDA\n";
-			relatorioVendas += "Realizada por : " + vend.getRespVenda().getNome() + " ";
-			relatorioVendas += "Total: " + vend.getTotal() + "\n";
+		if(!it.hasNext()){
+			relatorioVendas += "Nenhuma venda realizada!";
+		}else{
+			while(it.hasNext()) {
+				vend = (Venda) it.next();
+				relatorioVendas += "VENDA\n";
+				relatorioVendas += "Realizada por : " + vend.getRespVenda().getNome() + " ";
+				relatorioVendas += "Total: " + vend.getTotal() + "\n";
+			}
+
 		}
-	
+			
 		return relatorioVendas;
 	}
 	

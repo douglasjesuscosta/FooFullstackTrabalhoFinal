@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import modelos.Produto;
+import modelos.ProdutoQuilo;
 import modelos.ProdutoUnidade;
 
 public class EstoqueService {
@@ -66,12 +67,43 @@ public class EstoqueService {
 		return produto;
 	}
 
-	public boolean verificarQuantidade(int codProduto, int qntProduto) {
+	public boolean verificarQuantidadeUnidade(int codProduto, int qntProduto) {
 		
 		for (Produto produto : produtos) {
 			if(produto.getCodigo() == codProduto) {
 				ProdutoUnidade produtoUnidade = (ProdutoUnidade) produto;
 				if(produtoUnidade.getQuantidade() >= qntProduto)
+					return true;
+			}
+		}
+		return false;
+	}
+
+	public void retiraEstoque(Produto produtoVendido) {
+		
+		for (Produto produto : produtos) {
+			if(produto.getCodigo() == produtoVendido.getCodigo()) {
+				
+				if(produtoVendido instanceof ProdutoUnidade) {
+					ProdutoUnidade produtoUnidade = (ProdutoUnidade) produto;
+					produtoUnidade.setQuantidade(produtoUnidade.getQuantidade() - ((ProdutoUnidade)produtoVendido).getQuantidade());
+					break;
+				}
+				else {
+					ProdutoQuilo produtoQuilo = (ProdutoQuilo) produto;
+					produtoQuilo.setQuilo(produtoQuilo.getQuilo() - ((ProdutoQuilo)produtoVendido).getQuilo());
+					break;
+				}
+				
+			}
+		}
+	}
+
+	public boolean verificarQuantidadeKg(int codProduto, double kgProduto) {
+		for (Produto produto : produtos) {
+			if(produto.getCodigo() == codProduto) {
+				ProdutoQuilo produtoKg = (ProdutoQuilo) produto;
+				if(produtoKg.getQuilo() >= kgProduto)
 					return true;
 			}
 		}

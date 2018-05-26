@@ -109,28 +109,34 @@ public class RelatorioEstoqueService {
 		Iterator it = produtosEstoque.iterator();
 		Produto prod;
 		String relatorio = "============Relatorio de Produtos==============\n";
-		relatorio += "Produtos estoque:\n";
+		relatorio += "PRODUTOS EM ESTOQUE:\n";
 		
 		while(it.hasNext()) {
 			prod = (Produto) it.next();
 			relatorio += "Produto: " + prod.getNome() + "\n";
+			relatorio += "Descrição: " + prod.getDescricao() + "\n";
 			
 			if(prod instanceof ProdutoQuilo) {
-				relatorio += "Quilos: " + ((ProdutoQuilo) prod).getQuilo() + "\n";
+				relatorio += "Quilos: " + ((ProdutoQuilo) prod).getQuilo() + "\n\n";
 			}else {
-				relatorio += "Quantidade: " + ((ProdutoUnidade) prod).getQuantidade() + "\n";
+				relatorio += "Quantidade: " + ((ProdutoUnidade) prod).getQuantidade() + "\n\n";
 			}
 		}
-		relatorio += "Produtos no inicio do dia: " + data.getDia() + "/" + data.getMes() + "/" + data.getAno() + "\n";
+		relatorio += "QUANTIDADE AO INICIO DO DIA DE PRODUTOS COMPRADOS NA DATA: " + data.getDia() + "/" + data.getMes() + "/" + data.getAno() + "\n";
 		Iterator it2 = produtosInicioDia.iterator();
+		
+		if(!it2.hasNext())
+			System.out.println("Nenhuma alteração!");
+		
 		while(it2.hasNext()) {
 			prod = (Produto) it2.next();
 			relatorio += "Produto: " + prod.getNome() + "\n";
+			relatorio += "Descrição: " + prod.getDescricao() + "\n";
 			
 			if(prod instanceof ProdutoQuilo) {
-				relatorio += "Quilos: " + ((ProdutoQuilo) prod).getQuilo() + "\n";
+				relatorio += "Quilos: " + ((ProdutoQuilo) prod).getQuilo() + "\n\n";
 			}else {
-				relatorio += "Quantidade: " + ((ProdutoUnidade) prod).getQuantidade() + "\n";
+				relatorio += "Quantidade: " + ((ProdutoUnidade) prod).getQuantidade() + "\n\n";
 			}
 		}
 		

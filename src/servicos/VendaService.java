@@ -6,6 +6,7 @@ import java.util.Iterator;
 import modelos.Caixa;
 import modelos.Pagamento;
 import modelos.Produto;
+import modelos.ProdutoQuilo;
 import modelos.ProdutoUnidade;
 import modelos.Venda;
 
@@ -35,7 +36,21 @@ public class VendaService {
 
 	public void adicionarProdutoUnidade(int codProduto, int qntProduto) {
 		ProdutoUnidade produtoUnidade = (ProdutoUnidade) estoqueService.getProduto(codProduto);
-		this.venda.adicionaProduto(produtoUnidade); 
+		ProdutoUnidade produtoUnidadeVenda = new ProdutoUnidade();
+		clone(produtoUnidade, produtoUnidadeVenda);
+		produtoUnidadeVenda.setQuantidade(qntProduto);
+		this.venda.adicionaProduto(produtoUnidadeVenda); 
+		estoqueService.retiraEstoque(produtoUnidadeVenda);
+	}
+
+	private void clone(Produto produto, Produto produtoVenda) {
+		produtoVenda.setCodigo(produto.getCodigo());
+		produtoVenda.setCodigoBarra(produto.getCodigoBarra());
+		produtoVenda.setDescricao(produto.getDescricao());
+		produtoVenda.setMarca(produto.getMarca());
+		produtoVenda.setNome(produto.getNome());
+		produtoVenda.setPrazoValidade(produto.getPrazoValidade());
+		produtoVenda.setPreco(produto.getPreco());
 	}
 	
 	public void iniciarVenda(Caixa caixa) {
@@ -69,6 +84,15 @@ public class VendaService {
 	
 	public void receberPagamento(Pagamento pagamento) {
 		this.getVenda().setPagamento(pagamento);
+	}
+
+	public void adicionarProdutoQuilo(int codProduto, double kgProduto) {
+		ProdutoQuilo produtoKg = (ProdutoQuilo) estoqueService.getProduto(codProduto);
+		ProdutoQuilo produtoKgVenda = new ProdutoQuilo();
+		clone(produtoKg, produtoKgVenda);
+		produtoKgVenda.setQuilo(kgProduto);
+		this.venda.adicionaProduto(produtoKgVenda); 
+		estoqueService.retiraEstoque(produtoKgVenda);		
 	}
 	
 
