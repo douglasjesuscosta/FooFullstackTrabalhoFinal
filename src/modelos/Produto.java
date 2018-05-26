@@ -1,7 +1,5 @@
 package modelos;
 
-import java.util.Date;
-
 public abstract class Produto {
 	private int codigo;
 	private String codigoBarra;
