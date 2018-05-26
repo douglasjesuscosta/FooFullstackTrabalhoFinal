@@ -92,8 +92,7 @@ public class Main {
 				break;
 			}
 
-			System.out
-					.println("Digite a operação desejada \n1 - consultem o preço dos produtos em leitores \n0 - Sair");
+			System.out.println("Digite a operação desejada \n1 - consultem o preço dos produtos em leitores \n0 - Sair");
 			op = leitor.nextInt();
 			leitor.nextLine();
 		}
@@ -612,6 +611,7 @@ public class Main {
 			func = (Funcionario) it.next();
 			System.out.println("Nome do produto: " + func.getNome());
 			System.out.println("Codigo do produto: " + func.getCodigo());
+			System.out.println("");
 
 		}
 
